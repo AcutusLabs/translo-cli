@@ -2,14 +2,20 @@
   "name": "translo-chatgpt",
   "version": "1.0.0",
   "description": "translate your i18n files with chatgpt",
+  "type": "module",
+  "files": [
+    "src/**",
+    "languages/**"
+  ],
   "main": "dist/index.js",
   "bin": {
-    "translo-chatgpt": "dist/index.js"
+    "translo-chatgpt": "./dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun ./index.ts",
-    "build": "bun build ./index.ts --outdir ./dist"
+    "dev": "bun ./src/index.ts",
+    "build": "bun build ./src/index.ts --outdir ./dist --target node",
+    "watch": "bun build ./src/index.ts --outdir ./dist --target node --watch"
   },
   "author": "Davide Carpini",
   "license": "MIT",
@@ -17,7 +23,6 @@
     "@types/node": "^20.14.12"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
     "openai": "^4.53.0"
   }
 }

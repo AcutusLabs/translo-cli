@@ -1,6 +1,7 @@
+#!/usr/bin/env node
+
 import { writeFileSync } from "fs";
-import en from "./languages/en.json";
-import { forEach } from "lodash";
+import en from "../languages/en.json";
 import { KeyValueObject } from "./types";
 import {
   askChatGpt,
@@ -55,7 +56,7 @@ const completeTranslations = async () => {
       return askChatGpt(generatePrompt(language.name, batch));
     });
     const results = await Promise.all(promises);
-    forEach(results, (result) => {
+    results.forEach((result) => {
       Object.assign(translatedBatches, result);
     });
     writeFileSync(
