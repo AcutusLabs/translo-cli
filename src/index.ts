@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-import { writeFileSync } from "fs";
-import en from "../languages/en.json";
+import { readFileSync, writeFileSync } from "fs";
 import { KeyValueObject } from "./types";
 import {
   askChatGpt,
@@ -9,6 +8,7 @@ import {
   languagesToGenerate,
   splitObjectIntoBatches,
 } from "./utils";
+import { getConfig } from "./utils/getConfig";
 
 const generatePrompt = (language: string, batch: KeyValueObject) => {
   return `
@@ -24,7 +24,10 @@ ${JSON.stringify(batch, null, 2)}
 `;
 };
 
-const completeTranslations = async () => {
+const translate = async () => {
+  const config = getConfig();
+  const data = readFileSync(`${config.translationPath}/en.json`, "utf8");
+  const en = JSON.parse(data);
   languagesToGenerate.forEach(async (language) => {
     // TODO: add back current translations
     // const languageTranslations = translations[language.code] || {}
@@ -60,7 +63,7 @@ const completeTranslations = async () => {
       Object.assign(translatedBatches, result);
     });
     writeFileSync(
-      `./languages/${language.code}.json`,
+      `${config.translationPath}/${language.code}.json`,
       JSON.stringify(translatedBatches, null, 2)
     );
 
@@ -68,4 +71,4 @@ const completeTranslations = async () => {
   });
 };
 
-completeTranslations();
+translate();
