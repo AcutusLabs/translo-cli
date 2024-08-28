@@ -70,3 +70,18 @@ export const languages = [
     flag: "🇨🇳",
   },
 ];
+
+export const languagesToGenerate = languages.filter(
+  (language) => language.code !== "en"
+);
+
+export const fixedWords: {
+  [language: string]: {
+    [key: string]: string;
+  };
+} = {
+  it: {
+    round: "round",
+    screenshot: "screenshot",
+  },
+};

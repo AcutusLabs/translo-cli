@@ -1,8 +1,3 @@
-/**
- * Retrieves the configuration object.
- *
- * @returns The configuration object containing the translation path and other properties.
- */
 import { readFileSync } from "fs";
 
 const DEFAULT_CONFIG = {
@@ -10,8 +5,14 @@ const DEFAULT_CONFIG = {
   translationPath: "./languages",
 };
 
+/**
+ * Retrieves the configuration object.
+ *
+ * @returns The configuration object containing the translation path and other properties.
+ */
 export const getConfig = () => {
   try {
+    // TODO: check what other libraries are doing for config file location/reading
     const data = readFileSync(`translo.config.json`, "utf8");
     try {
       return {

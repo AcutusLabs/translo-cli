@@ -2,27 +2,10 @@
 
 import { readFileSync, writeFileSync } from "fs";
 import { KeyValueObject } from "./types";
-import {
-  askChatGpt,
-  getFixedWordPrompt,
-  languagesToGenerate,
-  splitObjectIntoBatches,
-} from "./utils";
+import { askChatGpt, splitObjectIntoBatches } from "./utils";
 import { getConfig } from "./utils/getConfig";
-
-const generatePrompt = (language: string, batch: KeyValueObject) => {
-  return `
-I'm working on internationalizing my application. 
-I will send you a json object with the translations from English to ${language}.
-Keep the object keys identical, some object values are empty string, please fill just them.
-respond using an unique JSON object without any comments or any other descriptions.
-
-${getFixedWordPrompt(language)}
-
-this is the JSON object with the translations:
-${JSON.stringify(batch, null, 2)}
-`;
-};
+import { generatePrompt } from "./utils/generatePrompt";
+import { languagesToGenerate } from "./constants";
 
 const translate = async () => {
   const config = getConfig();
