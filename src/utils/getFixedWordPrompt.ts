@@ -1,4 +1,4 @@
-import { fixedWords } from "../constants";
+import { getConfig } from "./getConfig";
 
 /**
  * Get a prompt that tells the user to use specific translations for certain words
@@ -6,7 +6,8 @@ import { fixedWords } from "../constants";
  * @returns The prompt to use for the language
  */
 export const getFixedWordPrompt = (language: string) => {
-  const fixedWordsForLanguage = fixedWords[language] || {};
+  const config = getConfig();
+  const fixedWordsForLanguage = config.fixedWords[language] || {};
 
   return Object.keys(fixedWordsForLanguage).length > 0
     ? `when translating the following words, please use the following translations (case insensitive):

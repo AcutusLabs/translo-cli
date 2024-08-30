@@ -2,19 +2,24 @@
 
 import { readFileSync, writeFileSync } from "fs";
 import { KeyValueObject } from "./types";
-import { askChatGpt, splitObjectIntoBatches } from "./utils";
-import { getConfig } from "./utils/getConfig";
-import { generatePrompt } from "./utils/generatePrompt";
-import { languagesToGenerate } from "./constants";
+import {
+  askChatGpt,
+  generatePrompt,
+  getConfig,
+  getLanguagesToBeGenerated,
+  splitObjectIntoBatches,
+} from "./utils";
+import { getExistingTranslationsFromLanguage } from "./utils/getExistingTranslationsFromLanguage";
 
 const translate = async () => {
   const config = getConfig();
   const data = readFileSync(`${config.translationPath}/en.json`, "utf8");
   const en = JSON.parse(data);
+
+  const languagesToGenerate = getLanguagesToBeGenerated();
   languagesToGenerate.forEach(async (language) => {
-    // TODO: add back current translations
-    // const languageTranslations = translations[language.code] || {}
-    const languageTranslations = {} as KeyValueObject;
+    let languageTranslations = getExistingTranslationsFromLanguage(language);
+
     // fill with missing en translations
     const missingTranslations = Object.keys(en).reduce((acc, key) => {
       if (!languageTranslations[key]) {
