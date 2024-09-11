@@ -38,13 +38,24 @@ const translate = async () => {
     console.log(`Generating translations for ${language.name}`);
     const batches = splitObjectIntoBatches(missingTranslations);
     const translatedBatches: KeyValueObject = languageTranslations;
-    const promises = batches.map(async (batch, index) => {
+    const promises = batches.map(async (languageBatch, index) => {
       console.log(
         `Generating translations for batch ${index + 1} for language "${
           language.name
         }"`
       );
-      return askChatGpt(generatePrompt(language.name, batch));
+      const englishBatch = Object.keys(languageBatch).reduce((acc, key) => {
+        acc[key] = en[key];
+        return acc;
+      }, {} as KeyValueObject);
+
+      return askChatGpt(
+        generatePrompt({
+          language: language.name,
+          languageBatch,
+          englishBatch,
+        })
+      );
     });
     const results = await Promise.all(promises);
     results.forEach((result) => {
