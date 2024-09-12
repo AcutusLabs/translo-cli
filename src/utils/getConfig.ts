@@ -41,6 +41,8 @@ const DEFAULT_CONFIG: Config = {
   languages,
   // fixed words that should not be translated
   fixedWords: {},
+  // the main language of the application from which the translations are derived
+  mainLanguage: "en",
 };
 
 // Cache the config object to avoid reading the file multiple times

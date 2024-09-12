@@ -20,4 +20,5 @@ export type Config = {
     code: string;
   }[];
   fixedWords: FixedWords;
+  mainLanguage: string;
 };

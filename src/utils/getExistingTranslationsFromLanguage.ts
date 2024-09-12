@@ -8,11 +8,11 @@ import { getConfig } from "./getConfig";
  * @returns The existing translations from the language file
  */
 export const getExistingTranslationsFromLanguage = (language: Language) => {
-  const config = getConfig();
+  const { translationPath } = getConfig();
   let languageTranslations: KeyValueObject = {};
   try {
     const data = readFileSync(
-      `${config.translationPath}/${language.code}.json`,
+      `${translationPath}/${language.code}.json`,
       "utf8"
     );
     languageTranslations = JSON.parse(data);

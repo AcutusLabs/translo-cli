@@ -6,28 +6,42 @@ import {
   askChatGpt,
   generatePrompt,
   getConfig,
-  getLanguagesToBeGenerated,
   splitObjectIntoBatches,
 } from "./utils";
 import { getExistingTranslationsFromLanguage } from "./utils/getExistingTranslationsFromLanguage";
 
+/**
+ * Main function to translate the translations from the main language to the other languages
+ */
 const translate = async () => {
-  const config = getConfig();
-  const data = readFileSync(`${config.translationPath}/en.json`, "utf8");
-  const en = JSON.parse(data);
+  const { mainLanguage, translationPath, languages } = getConfig();
 
-  const languagesToGenerate = getLanguagesToBeGenerated();
+  // read the main language translations
+  const data = readFileSync(`${translationPath}/${mainLanguage}.json`, "utf8");
+  const mainLanguageTranslations = JSON.parse(data);
+
+  // get the languages to generate from the main language
+  const languagesToGenerate = languages.filter(
+    (language) => language.code !== mainLanguage
+  );
+
+  // generate translations for each language
   languagesToGenerate.forEach(async (language) => {
-    let languageTranslations = getExistingTranslationsFromLanguage(language);
+    // read the existing translations for the language from the file
+    const languageTranslations = getExistingTranslationsFromLanguage(language);
 
-    // fill with missing en translations
-    const missingTranslations = Object.keys(en).reduce((acc, key) => {
-      if (!languageTranslations[key]) {
-        acc[key] = "";
-      }
-      return acc;
-    }, {} as KeyValueObject);
+    // get the missing translations from the main language
+    const missingTranslations = Object.keys(mainLanguageTranslations).reduce(
+      (acc, key) => {
+        if (!languageTranslations[key]) {
+          acc[key] = "";
+        }
+        return acc;
+      },
+      {} as KeyValueObject
+    );
 
+    // if all translations are already completed, skip the language
     if (Object.keys(missingTranslations).length === 0) {
       console.log(
         `Skipping: All translations for ${language.name} are already completed`
@@ -36,37 +50,52 @@ const translate = async () => {
     }
 
     console.log(`Generating translations for ${language.name}`);
+    // split the missing translations into batches to avoid exceeding the OpenAI API limit
     const batches = splitObjectIntoBatches(missingTranslations);
-    const translatedBatches: KeyValueObject = languageTranslations;
+
+    // create a new object to store the translated batches with the existing translations
+    const newLanguageTranslations: KeyValueObject = languageTranslations;
     const promises = batches.map(async (languageBatch, index) => {
       console.log(
         `Generating translations for batch ${index + 1} for language "${
           language.name
         }"`
       );
-      const englishBatch = Object.keys(languageBatch).reduce((acc, key) => {
-        acc[key] = en[key];
-        return acc;
-      }, {} as KeyValueObject);
+      // get the batch to translate from the main language
+      const mainLanguageBatch = Object.keys(languageBatch).reduce(
+        (acc, key) => {
+          acc[key] = mainLanguageTranslations[key];
+          return acc;
+        },
+        {} as KeyValueObject
+      );
 
+      // generate the prompt to translate the batch and ask ChatGPT
       return askChatGpt(
         generatePrompt({
-          language: language.name,
-          languageBatch,
-          englishBatch,
+          mainLanguageBatch,
+          mainLanguage,
+          targetLanguage: language.name,
+          targetLanguageBatch: languageBatch,
         })
       );
     });
+
+    // wait for all the promises to resolve
     const results = await Promise.all(promises);
+
+    // merge the results into the newLanguageTranslations object
     results.forEach((result) => {
-      Object.assign(translatedBatches, result);
+      Object.assign(newLanguageTranslations, result);
     });
+
+    // write the newLanguageTranslations object to the file
     writeFileSync(
-      `${config.translationPath}/${language.code}.json`,
-      JSON.stringify(translatedBatches, null, 2)
+      `${translationPath}/${language.code}.json`,
+      JSON.stringify(newLanguageTranslations, null, 2)
     );
 
-    console.log(`Translations for ${language.name} generated`);
+    console.log(`Translations for ${language.name} completed`);
   });
 };
 
