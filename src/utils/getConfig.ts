@@ -43,6 +43,10 @@ const DEFAULT_CONFIG: Config = {
   fixedWords: {},
   // the main language of the application from which the translations are derived
   mainLanguage: "en",
+  // sort main language file alphabetically
+  sortMainLanguageFileAlphabetically: true,
+  // sort target language files alphabetically
+  sortTargetLanguageFilesAlphabetically: true,
 };
 
 // Cache the config object to avoid reading the file multiple times

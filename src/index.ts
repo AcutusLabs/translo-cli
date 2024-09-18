@@ -14,11 +14,31 @@ import { getExistingTranslationsFromLanguage } from "./utils/getExistingTranslat
  * Main function to translate the translations from the main language to the other languages
  */
 const translate = async () => {
-  const { mainLanguage, translationPath, languages } = getConfig();
+  const {
+    mainLanguage,
+    translationPath,
+    languages,
+    sortMainLanguageFileAlphabetically,
+    sortTargetLanguageFilesAlphabetically,
+  } = getConfig();
 
   // read the main language translations
   const data = readFileSync(`${translationPath}/${mainLanguage}.json`, "utf8");
-  const mainLanguageTranslations = JSON.parse(data);
+  let mainLanguageTranslations = JSON.parse(data);
+
+  // sort the main language translations alphabetically
+  if (sortMainLanguageFileAlphabetically) {
+    mainLanguageTranslations = Object.keys(mainLanguageTranslations)
+      .sort()
+      .reduce((acc, key) => {
+        acc[key] = mainLanguageTranslations[key];
+        return acc;
+      }, {} as KeyValueObject);
+    writeFileSync(
+      `${translationPath}/${mainLanguage}.json`,
+      JSON.stringify(mainLanguageTranslations, null, 2)
+    );
+  }
 
   // get the languages to generate from the main language
   const languagesToGenerate = languages.filter(
@@ -54,7 +74,7 @@ const translate = async () => {
     const batches = splitObjectIntoBatches(missingTranslations);
 
     // create a new object to store the translated batches with the existing translations
-    const newLanguageTranslations: KeyValueObject = languageTranslations;
+    let newLanguageTranslations: KeyValueObject = languageTranslations;
     const promises = batches.map(async (languageBatch, index) => {
       console.log(
         `Generating translations for batch ${index + 1} for language "${
@@ -88,6 +108,16 @@ const translate = async () => {
     results.forEach((result) => {
       Object.assign(newLanguageTranslations, result);
     });
+
+    // sort the newLanguageTranslations object alphabetically
+    if (sortTargetLanguageFilesAlphabetically) {
+      newLanguageTranslations = Object.keys(newLanguageTranslations)
+        .sort()
+        .reduce((acc, key) => {
+          acc[key] = newLanguageTranslations[key];
+          return acc;
+        }, {} as KeyValueObject);
+    }
 
     // write the newLanguageTranslations object to the file
     writeFileSync(

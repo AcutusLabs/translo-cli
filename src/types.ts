@@ -21,4 +21,6 @@ export type Config = {
   }[];
   fixedWords: FixedWords;
   mainLanguage: string;
+  sortMainLanguageFileAlphabetically: boolean;
+  sortTargetLanguageFilesAlphabetically: boolean;
 };
