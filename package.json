@@ -3,6 +3,13 @@
   "version": "1.0.3",
   "description": "translate your i18n files with chatgpt",
   "type": "module",
+  "keywords": [
+    "i18n",
+    "translation",
+    "chatgpt",
+    "openai",
+    "cli"
+  ],
   "files": [
     "src/**",
     "languages/**"
@@ -17,8 +24,12 @@
     "build": "bun build ./src/index.ts --outdir ./dist --target node",
     "watch": "bun build ./src/index.ts --outdir ./dist --target node --watch"
   },
-  "author": "Davide Carpini",
+  "author": "Davide Carpini <carpini.davide@gmail.com> Giacomo Materozzi <mate.giacomo@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AcutusLabs/translo-cli.git"
+  },
   "devDependencies": {
     "@types/node": "^20.14.12"
   },
