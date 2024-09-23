@@ -1,6 +1,6 @@
 {
-  "name": "translo-chatgpt",
-  "version": "1.0.0",
+  "name": "translo-cli",
+  "version": "1.0.1",
   "description": "translate your i18n files with chatgpt",
   "type": "module",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "main": "dist/index.js",
   "bin": {
-    "translo-chatgpt": "./dist/index.js"
+    "translo-cli": "./dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
