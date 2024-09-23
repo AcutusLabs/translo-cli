@@ -1,6 +1,6 @@
-# Translo-ChatGPT
+# Translo-Cli
 
-Translo-ChatGPT is an open-source library designed to help you translate your i18n files using OpenAI's ChatGPT. This tool reads your main language translation file and generates translations for other specified languages.
+Translo-Cli is an open-source library designed to help you translate your i18n files using OpenAI's ChatGPT. This tool reads your main language translation file and generates translations for other specified languages.
 
 ## Features
 
@@ -85,8 +85,8 @@ Giacomo Materozzi
 To install the library, you can clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/yourusername/translo-chatgpt.git
-cd translo-chatgpt
+git clone https://github.com/AcutusLabs/translo-cli.git
+cd translo-cli
 bun watch # to compile the project
 npm link # to create a global link to the project
 ```
