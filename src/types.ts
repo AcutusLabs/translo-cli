@@ -15,6 +15,7 @@ export type Language = {
 
 export type Config = {
   translationPath: string;
+  batchSize: number;
   languages: {
     name: string;
     code: string;

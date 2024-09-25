@@ -47,6 +47,9 @@ const DEFAULT_CONFIG: Config = {
   sortMainLanguageFileAlphabetically: true,
   // sort target language files alphabetically
   sortTargetLanguageFilesAlphabetically: true,
+  // openai has a limit per request, so we need to split the object into batches
+  // if the request is too large, the request will fail, if it fails, you can try to decrease the batch size
+  batchSize: 15,
 };
 
 // Cache the config object to avoid reading the file multiple times

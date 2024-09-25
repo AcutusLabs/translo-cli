@@ -1,7 +1,5 @@
 import { KeyValueObject } from "../types";
-
-// we need to split the object into batches because the OpenAI API has a limit per request
-const BATCH_SIZE = 15;
+import { getConfig } from "./getConfig";
 
 /**
  * Splits an object into batches of a specific size.
@@ -11,11 +9,12 @@ const BATCH_SIZE = 15;
 export const splitObjectIntoBatches = (
   data: KeyValueObject
 ): KeyValueObject[] => {
+  const { batchSize } = getConfig();
   const entries = Object.entries(data);
   const batches: KeyValueObject[] = [];
 
-  for (let i = 0; i < entries.length; i += BATCH_SIZE) {
-    const batchEntries = entries.slice(i, i + BATCH_SIZE);
+  for (let i = 0; i < entries.length; i += batchSize) {
+    const batchEntries = entries.slice(i, i + batchSize);
     const batchObject: KeyValueObject = Object.fromEntries(batchEntries);
     batches.push(batchObject);
   }
