@@ -24,11 +24,17 @@ To run the translation process, use the following command:
 OPENAI_API_KEY="your openai key here" translo-cli
 ```
 
+or hide the key in the command with dotenv like thisand create a .env file with the key
+
+```bash
+dotenv -e .env translo-cli
+```
+
 This command will read the main language translation file, generate translations for the specified languages, and save the translated files in the specified path.
 
 ## Configuration
 
-The library uses a configuration file named `translo.config.json`. If this file is not found, it will use the default configuration. The configuration includes the following properties:
+The library uses a configuration file named `translo.config.json`, in the root of the project. If this file is not found, it will use the default configuration. The configuration includes the following properties:
 
 - `translationPath`: The path to the folder containing the translation files.
 - `languages`: An array of languages to generate translations for.
