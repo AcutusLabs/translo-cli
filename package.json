@@ -1,6 +1,6 @@
 {
   "name": "translo-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "translate your i18n files with chatgpt",
   "type": "module",
   "keywords": [
@@ -34,6 +34,7 @@
     "@types/node": "^20.14.12"
   },
   "dependencies": {
+    "@changesets/cli": "^2.27.9",
     "openai": "^4.53.0"
   }
 }
