@@ -24,7 +24,7 @@ To run the translation process, use the following command:
 OPENAI_API_KEY="your openai key here" translo-cli
 ```
 
-or hide the key in the command with dotenv like thisand create a .env file with the key
+or hide the key in the command with dotenv like this and create a .env file with the key
 
 ```bash
 dotenv -e .env translo-cli
