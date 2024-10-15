@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* v8 ignore start */
+
 import { readFileSync, writeFileSync } from "fs";
 import { KeyValueObject } from "./types";
 import {
@@ -130,3 +132,5 @@ const translate = async () => {
 };
 
 translate();
+
+/* v8 ignore end */

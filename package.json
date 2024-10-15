@@ -19,7 +19,8 @@
     "translo-cli": "./dist/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "dev": "bun ./src/index.ts",
     "build": "bun build ./src/index.ts --outdir ./dist --target node",
     "watch": "bun build ./src/index.ts --outdir ./dist --target node --watch"
@@ -31,7 +32,9 @@
     "url": "https://github.com/AcutusLabs/translo-cli.git"
   },
   "devDependencies": {
-    "@types/node": "^20.14.12"
+    "@types/node": "^20.14.12",
+    "@vitest/coverage-v8": "2.1.3",
+    "vitest": "^2.1.3"
   },
   "dependencies": {
     "@changesets/cli": "^2.27.9",
