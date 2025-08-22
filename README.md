@@ -38,7 +38,7 @@ The library uses a configuration file named `translo.config.json`, in the root o
 
 - `translationPath`: The path to the folder containing the translation files.
 - `languages`: An array of languages to generate translations for.
-- `fixedWords`: An object containing words that should not be translated.
+- `fixedWords`: An object containing words that should use specific translations instead of being translated by AI. You can specify fixed words per language using the language code as the key, or use `"all"` to apply fixed words to all languages.
 - `mainLanguage`: The main language of the application from which the translations are derived.
 - `sortMainLanguageFileAlphabetically`: Whether to sort the main language file alphabetically.
 - `sortTargetLanguageFilesAlphabetically`: Whether to sort the target language files alphabetically.
@@ -57,12 +57,42 @@ Example configuration:
     { "name": "Chinese", "code": "zh" },
     { "name": "Japanese", "code": "ja" }
   ],
-  "fixedWords": {},
+  "fixedWords": {
+    "all": {
+      "brand": "MyBrand",
+      "company": "MyCompany"
+    },
+    "es": {
+      "hello": "hola"
+    },
+    "fr": {
+      "hello": "bonjour"
+    }
+  },
   "mainLanguage": "en",
   "sortMainLanguageFileAlphabetically": true,
   "sortTargetLanguageFilesAlphabetically": true
 }
 ```
+
+### Fixed Words
+
+The `fixedWords` configuration allows you to specify words that should use predetermined translations instead of being translated by AI. This is useful for:
+
+- Brand names that should remain consistent across all languages
+- Technical terms with specific translations
+- Company-specific terminology
+
+You can configure fixed words in two ways:
+
+1. **Global fixed words (`"all"`)**: Apply to all target languages
+2. **Language-specific fixed words**: Apply only to specific languages (using language codes)
+
+In the example above:
+
+- `"brand"` and `"company"` will use the same fixed translations ("MyBrand" and "MyCompany") in all languages
+- `"hello"` will be translated as "hola" specifically in Spanish and "bonjour" specifically in French
+- If the same word is defined both globally and for a specific language, the global translation takes precedence
 
 ## Example
 

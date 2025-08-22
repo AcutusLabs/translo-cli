@@ -23,7 +23,10 @@ describe("askChatGpt", () => {
       apiKey: undefined,
       dangerouslyAllowBrowser: true,
     });
-    expect(mockAskChatGPT).toHaveBeenCalledWith({ prompt });
+    expect(mockAskChatGPT).toHaveBeenCalledWith({
+      prompt,
+      model: "gpt-4.1",
+    });
     expect(result).toBe(mockResponse.data);
   });
 });

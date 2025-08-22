@@ -78,7 +78,7 @@ describe("OpenAIHelper", () => {
 
       expect(mockOpenAI.chat.completions.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          model: "gpt-4o",
+          model: "gpt-4.1",
         })
       );
     });

@@ -21,6 +21,7 @@ describe("getConfig", () => {
       sortTargetLanguageFilesAlphabetically: true,
       batchSize: 15,
       deleteOrphanedKeys: true,
+      model: "gpt-4.1",
     });
   });
 
@@ -44,6 +45,7 @@ describe("getConfig", () => {
       sortTargetLanguageFilesAlphabetically: true,
       batchSize: 20,
       deleteOrphanedKeys: true,
+      model: "gpt-4.1",
     });
   });
 });
