@@ -25,4 +25,5 @@ export type Config = {
   sortMainLanguageFileAlphabetically: boolean;
   sortTargetLanguageFilesAlphabetically: boolean;
   deleteOrphanedKeys: boolean;
+  model: string;
 };

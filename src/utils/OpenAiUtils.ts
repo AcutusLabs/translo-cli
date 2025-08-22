@@ -1,20 +1,20 @@
-import OpenAI, { ClientOptions } from "openai"
+import OpenAI, { ClientOptions } from "openai";
 
 /**
  * Parameters for the OpenAIHelper class.
  */
 export type OpenAIHelperParams = {
-  prompt: string
-  maxTokens?: number
-  images?: string[]
-  model?: string
-}
+  prompt: string;
+  maxTokens?: number;
+  images?: string[];
+  model?: string;
+};
 
 /**
  * Helper class for interacting with the OpenAI API.
  */
 export class OpenAIHelper {
-  private openai: OpenAI
+  private openai: OpenAI;
 
   /**
    * Constructs a new instance of the OpenAIHelper class.
@@ -23,9 +23,9 @@ export class OpenAIHelper {
    */
   constructor(options: ClientOptions) {
     if (!options.apiKey) {
-      throw new Error("apiKey is required")
+      throw new Error("apiKey is required");
     }
-    this.openai = new OpenAI(options)
+    this.openai = new OpenAI(options);
   }
 
   /**
@@ -33,7 +33,12 @@ export class OpenAIHelper {
    * @param params The parameters for the chat prompt.
    * @returns The response from the OpenAI API.
    */
-  public askChatGPT = async ({ prompt, maxTokens, images, model = "gpt-4o" }: OpenAIHelperParams) => {
+  public askChatGPT = async ({
+    prompt,
+    maxTokens,
+    images,
+    model = "gpt-4.1",
+  }: OpenAIHelperParams) => {
     const response = await this.openai.chat.completions.create({
       model,
       max_tokens: maxTokens,
@@ -57,8 +62,8 @@ export class OpenAIHelper {
       response_format: {
         type: "json_object",
       },
-    })
-    const data = JSON.parse(response.choices[0]?.message.content || "{}")
-    return { ...response, data }
-  }
+    });
+    const data = JSON.parse(response.choices[0]?.message.content || "{}");
+    return { ...response, data };
+  };
 }

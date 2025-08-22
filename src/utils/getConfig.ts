@@ -52,6 +52,8 @@ const DEFAULT_CONFIG: Config = {
   batchSize: 15,
   // delete keys in all languages that are not present in the main language file
   deleteOrphanedKeys: true,
+  // the OpenAI model to use for translations
+  model: "gpt-4.1",
 };
 
 // Cache the config object to avoid reading the file multiple times
