@@ -1,6 +1,6 @@
 {
   "name": "translo-cli",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "translate your i18n files with chatgpt",
   "type": "module",
   "keywords": [
