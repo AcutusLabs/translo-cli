@@ -93,7 +93,7 @@ To install the library, you can clone the repository and install the dependencie
 ```bash
 git clone https://github.com/AcutusLabs/translo-cli.git
 cd translo-cli
-bun watch # to compile the project
+npx bun watch # to compile the project
 npm link # to create a global link to the project
 ```
 

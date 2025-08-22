@@ -9,6 +9,7 @@ import {
   generatePrompt,
   getConfig,
   splitObjectIntoBatches,
+  removeOrphanedKeys,
 } from "./utils";
 import { getExistingTranslationsFromLanguage } from "./utils/getExistingTranslationsFromLanguage";
 
@@ -22,6 +23,7 @@ const translate = async () => {
     languages,
     sortMainLanguageFileAlphabetically,
     sortTargetLanguageFilesAlphabetically,
+    deleteOrphanedKeys,
   } = getConfig();
 
   // read the main language translations
@@ -50,7 +52,30 @@ const translate = async () => {
   // generate translations for each language
   languagesToGenerate.forEach(async (language) => {
     // read the existing translations for the language from the file
-    const languageTranslations = getExistingTranslationsFromLanguage(language);
+    let languageTranslations = getExistingTranslationsFromLanguage(language);
+
+    // remove orphaned keys if the config option is enabled
+    if (deleteOrphanedKeys) {
+      const originalKeysCount = Object.keys(languageTranslations).length;
+      languageTranslations = removeOrphanedKeys(
+        mainLanguageTranslations,
+        languageTranslations
+      );
+      const newKeysCount = Object.keys(languageTranslations).length;
+      const removedKeysCount = originalKeysCount - newKeysCount;
+
+      if (removedKeysCount > 0) {
+        console.log(
+          `Removed ${removedKeysCount} orphaned key(s) from ${language.name}`
+        );
+
+        // sav
+        writeFileSync(
+          `${translationPath}/${language.code}.json`,
+          JSON.stringify(languageTranslations, null, 2)
+        );
+      }
+    }
 
     // get the missing translations from the main language
     const missingTranslations = Object.keys(mainLanguageTranslations).reduce(

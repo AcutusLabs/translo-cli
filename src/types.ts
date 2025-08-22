@@ -24,4 +24,5 @@ export type Config = {
   mainLanguage: string;
   sortMainLanguageFileAlphabetically: boolean;
   sortTargetLanguageFilesAlphabetically: boolean;
+  deleteOrphanedKeys: boolean;
 };

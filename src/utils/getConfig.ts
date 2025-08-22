@@ -50,6 +50,8 @@ const DEFAULT_CONFIG: Config = {
   // openai has a limit per request, so we need to split the object into batches
   // if the request is too large, the request will fail, if it fails, you can try to decrease the batch size
   batchSize: 15,
+  // delete keys in all languages that are not present in the main language file
+  deleteOrphanedKeys: true,
 };
 
 // Cache the config object to avoid reading the file multiple times

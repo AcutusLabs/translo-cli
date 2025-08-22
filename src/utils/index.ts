@@ -5,6 +5,7 @@ export * from "./generatePrompt";
 export * from "./splitObjectIntoBatches";
 export * from "./askChatGpt";
 export * from "./OpenAiUtils";
-export * from "./getConfig";
-export * from "./generatePrompt";
+export * from "./removeOrphanedKeys";
+export * from "./getExistingTranslationsFromLanguage";
+export * from "./validateFixedWords";
 /* v8 ignore end */

@@ -20,6 +20,7 @@ describe("getConfig", () => {
       sortMainLanguageFileAlphabetically: true,
       sortTargetLanguageFilesAlphabetically: true,
       batchSize: 15,
+      deleteOrphanedKeys: true,
     });
   });
 
@@ -42,6 +43,7 @@ describe("getConfig", () => {
       sortMainLanguageFileAlphabetically: true,
       sortTargetLanguageFilesAlphabetically: true,
       batchSize: 20,
+      deleteOrphanedKeys: true,
     });
   });
 });
