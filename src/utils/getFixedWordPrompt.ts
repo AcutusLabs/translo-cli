@@ -8,15 +8,17 @@ import { getConfig } from "./getConfig";
  * @param language The language code to generate the prompt for
  * @returns The prompt string containing fixed word translations, or empty string if no fixed words
  */
-export const getFixedWordPrompt = (language: string) => {
+export const getFixedWordPrompt = (languageCode: string) => {
   const config = getConfig();
   const fixedWordsForLanguage = {
-    ...(config.fixedWords[language] || {}),
+    ...(config.fixedWords[languageCode] || {}),
     ...(config.fixedWords["all"] || {}),
   };
 
+  console.log("fixedWordsForLanguage", languageCode, fixedWordsForLanguage);
+
   return Object.keys(fixedWordsForLanguage).length > 0
-    ? `when translating the following words, please use the following translations (case insensitive):
+    ? `when translating the following words, please use always the following translations:
 ${JSON.stringify(fixedWordsForLanguage, null, 2)}`
     : "";
 };

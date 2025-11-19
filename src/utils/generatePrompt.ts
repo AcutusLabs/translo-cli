@@ -11,11 +11,13 @@ import { getFixedWordPrompt } from "./getFixedWordPrompt";
  */
 export const generatePrompt = ({
   targetLanguage,
+  targetLanguageCode,
   targetLanguageBatch,
   mainLanguage,
   mainLanguageBatch,
 }: {
   targetLanguage: string;
+  targetLanguageCode: string;
   targetLanguageBatch: KeyValueObject;
   mainLanguage: string;
   mainLanguageBatch: KeyValueObject;
@@ -33,6 +35,6 @@ ${JSON.stringify(targetLanguageBatch, null, 2)}
 Keep the object keys identical, some object values are empty string, please fill just them.
 respond using an unique JSON object without any comments or any other descriptions.
 
-${getFixedWordPrompt(targetLanguage)}
+${getFixedWordPrompt(targetLanguageCode)}
 `;
 };

@@ -123,6 +123,7 @@ const translate = async () => {
           mainLanguageBatch,
           mainLanguage,
           targetLanguage: language.name,
+          targetLanguageCode: language.code,
           targetLanguageBatch: languageBatch,
         })
       );
